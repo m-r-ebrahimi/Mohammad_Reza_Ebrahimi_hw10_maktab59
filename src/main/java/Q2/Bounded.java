@@ -11,14 +11,14 @@ public class Bounded<T> {
         return t;
     }
 
-    public <U extends Number> void inspect(U u){
+    public <U extends Number> void inspect(U u) {
         System.out.println("T: " + t.getClass().getName());
         System.out.println("U: " + u.getClass().getName());
     }
 
     public static void main(String[] args) {
         Bounded<Integer> integerBox = new Bounded<Integer>();
-        integerBox.set(new Integer(10));
-        integerBox.inspect("some text"); // error: this is still String!
+        integerBox.set(10);
+        //integerBox.inspect("some text"); // error: this is still String!
     }
 }
