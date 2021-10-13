@@ -3,19 +3,17 @@ package Q1.entity;
 import Q1.manager.DrugListManager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DrugList implements Methods {
     private int id;
-    private int patientId;
-    private int drugId;
-    private int number;
+    private Person patient;
+    private List<Drug> drugs = new ArrayList<Drug>(10);
 
-    public DrugList(int id, int patientId, int drugId, int number) {
-        this.id = id;
-        this.patientId = patientId;
-        this.drugId = drugId;
-        this.number = number;
+    public DrugList(Person patient) {
+        this.patient = patient;
     }
 
     public int getId() {
@@ -26,47 +24,32 @@ public class DrugList implements Methods {
         this.id = id;
     }
 
-    public int getPatientId() {
-        return patientId;
+    public Person getPatient() {
+        return patient;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setPatient(Person patient) {
+        this.patient = patient;
     }
 
-    public int getDrugId() {
-        return drugId;
+    public List<Drug> getDrugs() {
+        return drugs;
     }
 
-    public void setDrugId(int drugId) {
-        this.drugId = drugId;
+    public void setDrugs(List<Drug> drugs) {
+        this.drugs = drugs;
     }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DrugList drugList = (DrugList) o;
-        return id == drugList.id && patientId == drugList.patientId && drugId == drugList.drugId && number == drugList.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, patientId, drugId, number);
-    }
-
 
     @Override
     public <T extends Row> boolean addItem(T item) throws SQLException, ClassNotFoundException {
-        return DrugListManager.insert((RowDrugList) item);
+        if (drugs.size() >= 10) {
+            System.out.println("Your list is full. try another list.");
+            return false;
+        } else {
+            drugs.add(((RowDrugList) item).getDrug());
+            DrugListManager.insert((RowDrugList) item);
+            return true;
+        }
     }
 
     @Override
