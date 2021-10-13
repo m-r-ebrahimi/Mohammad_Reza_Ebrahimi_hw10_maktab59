@@ -1,8 +1,11 @@
 package Q1.entity;
 
+import Q1.manager.DrugListManager;
+
+import java.sql.SQLException;
 import java.util.Objects;
 
-public class DrugList {
+public class DrugList implements Methods {
     private int id;
     private int patientId;
     private int drugId;
@@ -58,5 +61,21 @@ public class DrugList {
     @Override
     public int hashCode() {
         return Objects.hash(id, patientId, drugId, number);
+    }
+
+
+    @Override
+    public <T extends Row> boolean addItem(T item) throws SQLException, ClassNotFoundException {
+        return DrugListManager.insert((RowDrugList) item);
+    }
+
+    @Override
+    public <T> boolean removeItem(T item) {
+        return false;
+    }
+
+    @Override
+    public <T> boolean updateItem(T item) {
+        return false;
     }
 }

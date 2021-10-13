@@ -1,4 +1,4 @@
-package Q1.dao;
+package Q1.database;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
